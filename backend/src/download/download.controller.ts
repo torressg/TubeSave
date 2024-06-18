@@ -15,6 +15,14 @@ export class DownloadController {
     if (!url) {
       return res.status(400).send({ error: 'URL is required' });
     }
+    if (
+      !url.startsWith('https://www.youtube.com/watch?') ||
+      !url.startsWith('https://youtu.be/')
+    ) {
+      return res.status(400).send({
+        error: `URL must start with 'https://www.youtube.com/watch?' or 'https://youtu.be/'`,
+      });
+    }
     if (!format) {
       return res.status(400).send({ error: 'Format is required' });
     }
