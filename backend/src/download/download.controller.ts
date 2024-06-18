@@ -13,9 +13,14 @@ export class DownloadController {
     @Res() res: Response,
   ) {
     if (!url) {
-      return res.status(400).send('URL is required');
+      return res.status(400).send({ error: 'URL is required' });
     }
-
+    if (!format) {
+      return res.status(400).send({ error: 'Format is required' });
+    }
+    if (format !== 'mp3' && format !== 'mp4') {
+      return res.status(400).send({ error: `Format must be 'mp4' or 'mp3'` });
+    }
     try {
       const { buffer, titleLink } = await this.downloadService.downloadVideo(
         url,
